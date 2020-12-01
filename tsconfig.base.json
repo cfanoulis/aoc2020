@@ -1,3 +1,8 @@
 {
-	"extends": "@sapphire/ts-config"
+	"extends": "@sapphire/ts-config",
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"resolveJsonModule": false
+	}
 }
