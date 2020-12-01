@@ -5,8 +5,8 @@ My solutions for [Advent of Code 2020](https://adventofcode.com/events/2020)
 ### How to run any soulution
 
 ```bash
-# Create a file named `input` inside the day's folder you want to run
-echo YourInput > src/dayX/input
+# Create a file named `input` on the project root
+echo YourInput > input
 
 # Build it
 yarn tsc -b src/dayX
