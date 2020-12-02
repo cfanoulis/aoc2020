@@ -19,10 +19,12 @@ while (cont) {
 }
 
 const nums = new Combination(numbers, 3) as number[][]; // Am I cheating with this type? Slightly
+let iter = 0;
 for (const [n1, n2, n3] of nums) {
+	++iter;
 	console.log(`[Part 2] Testing ${n1}, ${n2}, ${n3}`);
 	if (n1 + n2 + n3 === 2020) {
-		console.log(`[Part 2] AND ANOTHER ONE! Now the number is ${n1 * n2 * n3}`);
+		console.log(`[Part 2] AND ANOTHER ONE! Now the number is ${n1 * n2 * n3}. Took me ${iter} iterations`);
 		break;
 	}
 }
