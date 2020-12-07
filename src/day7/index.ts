@@ -17,6 +17,14 @@ function holdsGold(graph: Record<string, Bag[] | true>, color: string) {
 	return resArray.some((v) => v);
 }
 
+function holdsHowMany(graph: Record<string, Bag[] | true>, color: string) {
+	const bag = graph[color];
+	if (bag === true || typeof bag === 'undefined') return 0;
+	const sum = bag.reduce((a, b) => a + b.amount, 0);
+	const nextLevel = (bag.map((v) => holdsHowMany(graph, v.color) * v.amount) as number[]).reduce((acc, val) => acc + val, 0) as number;
+	return sum + nextLevel;
+}
+
 function firstPart() {
 	const graph: Record<string, Bag[] | true> = {};
 
@@ -46,7 +54,26 @@ function firstPart() {
 }
 
 function secondPart() {
-	return `not implemented`;
+	const graph: Record<string, Bag[] | true> = {};
+
+	const lines = input.split('\n').filter(Boolean);
+	for (const line of lines) {
+		const [col, rule] = line.split(' bags contain ');
+		if (rule.trim() === 'no other bags.') {
+			Reflect.set(graph, col, true);
+			continue;
+		}
+
+		for (const part of rule.replaceAll('bags', '').replaceAll('bag', '').replaceAll('.', '').split(',')) {
+			const partArray = part.split(' ').filter(Boolean);
+			const amount = parseInt(partArray.shift() ?? '', 10);
+			const color = partArray.join(' ');
+
+			Array.isArray(graph[col]) ? (graph[col] as Bag[]).push({ color, amount }) : Reflect.set(graph, col, [{ color, amount }]);
+		}
+	}
+
+	return holdsHowMany(graph, 'shiny gold');
 }
 
 console.log(firstPart());
